@@ -73,9 +73,15 @@ export function ResultDisplay({ result }: ResultDisplayProps) {
         </AlertDescription>
       </Alert>
       
-      <div className="text-sm text-muted-foreground flex items-center gap-1 mt-2">
-        <Info className="h-4 w-4" />
-        <span>Resultado baseado na NBR 5410 - Instalações Elétricas de Baixa Tensão</span>
+      <div className="space-y-2 text-sm text-muted-foreground">
+        <div className="flex items-center gap-1">
+          <Info className="h-4 w-4" />
+          <span>Resultado baseado na NBR 5410 - Instalações Elétricas de Baixa Tensão</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <Info className="h-4 w-4" />
+          <span>Aviso Legal: Ferramenta para referência de cálculos. Consulte sempre um profissional qualificado.</span>
+        </div>
       </div>
     </div>
   );

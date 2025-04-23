@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -92,6 +92,11 @@ export function SimpleCalculator() {
   const [result, setResult] = useState<WireResult | null>(null);
   const [suggestions, setSuggestions] = useState(usageTypes[1].suggestions);
 
+  // Reset result when any input changes
+  useEffect(() => {
+    setResult(null);
+  }, [usageType, power, voltage, distance, installationType]);
+
   const handleUsageTypeChange = (value: string) => {
     setUsageType(value);
     const selectedType = usageTypes.find(type => type.id === value);
@@ -114,8 +119,6 @@ export function SimpleCalculator() {
     setResult(wireResult);
   };
 
-  const selectedUsageType = usageTypes.find(type => type.id === usageType);
-
   return (
     <div className="w-full space-y-6">
       <div className="flex items-center gap-2 text-primary">
@@ -126,104 +129,111 @@ export function SimpleCalculator() {
       <Card>
         <CardContent className="pt-6">
           <form className="space-y-6">
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <Label htmlFor="usageType" className="text-base">
-                  Tipo de Uso
-                </Label>
-                <CircleHelp text="Selecione o tipo de equipamento ou circuito que você deseja instalar" />
-              </div>
-              
-              <Select value={usageType} onValueChange={handleUsageTypeChange}>
-                <SelectTrigger id="usageType" className="w-full">
-                  <SelectValue placeholder="Selecione o tipo de uso" />
-                </SelectTrigger>
-                <SelectContent>
-                  {usageTypes.map((type) => (
-                    <SelectItem key={type.id} value={type.id} className="flex items-center gap-2">
-                      <div className="flex items-center gap-2">
-                        {type.icon}
-                        <span>{type.label}</span>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <Label htmlFor="power" className="text-base">
-                  Potência do Equipamento (Watts)
-                </Label>
-                <CircleHelp text="Potência do equipamento em Watts. Verifique na etiqueta do produto ou manual." />
-              </div>
-              
-              <div className="space-y-2">
-                <Input
-                  type="number"
-                  id="power"
-                  value={power}
-                  onChange={(e) => setPower(Number(e.target.value))}
-                  className="w-full"
-                />
+            {/* First row - Usage Type and Power */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <Label htmlFor="usageType" className="text-base">
+                    Tipo de Uso
+                  </Label>
+                  <CircleHelp text="Selecione o tipo de equipamento ou circuito que você deseja instalar" />
+                </div>
                 
-                <div className="flex flex-wrap gap-2">
-                  {suggestions.map((value) => (
-                    <Button
-                      key={value}
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setPower(value)}
-                      className={power === value ? "bg-primary/10" : ""}
-                    >
-                      {value} W
-                    </Button>
-                  ))}
+                <Select value={usageType} onValueChange={handleUsageTypeChange}>
+                  <SelectTrigger id="usageType" className="w-full">
+                    <SelectValue placeholder="Selecione o tipo de uso" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {usageTypes.map((type) => (
+                      <SelectItem key={type.id} value={type.id} className="flex items-center gap-2">
+                        <div className="flex items-center gap-2">
+                          {type.icon}
+                          <span>{type.label}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <Label htmlFor="power" className="text-base">
+                    Potência do Equipamento (Watts)
+                  </Label>
+                  <CircleHelp text="Potência do equipamento em Watts. Verifique na etiqueta do produto ou manual." />
+                </div>
+                
+                <div className="space-y-2">
+                  <Input
+                    type="number"
+                    id="power"
+                    value={power}
+                    onChange={(e) => setPower(Number(e.target.value))}
+                    className="w-full"
+                  />
+                  
+                  <div className="flex flex-wrap gap-2">
+                    {suggestions.map((value) => (
+                      <Button
+                        key={value}
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setPower(value)}
+                        className={power === value ? "bg-primary/10" : ""}
+                      >
+                        {value} W
+                      </Button>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <Label className="text-base">Tensão da Rede</Label>
-                <CircleHelp text="Tensão da rede elétrica disponível no local da instalação" />
+            {/* Second row - Voltage and Distance */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <Label className="text-base">Tensão da Rede</Label>
+                  <CircleHelp text="Tensão da rede elétrica disponível no local da instalação" />
+                </div>
+                
+                <RadioGroup
+                  value={voltage}
+                  onValueChange={setVoltage}
+                  className="flex space-x-4"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="127" id="127v" />
+                    <Label htmlFor="127v" className="cursor-pointer">127V</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="220" id="220v" />
+                    <Label htmlFor="220v" className="cursor-pointer">220V</Label>
+                  </div>
+                </RadioGroup>
               </div>
-              
-              <RadioGroup
-                value={voltage}
-                onValueChange={setVoltage}
-                className="flex space-x-4"
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="127" id="127v" />
-                  <Label htmlFor="127v" className="cursor-pointer">127V</Label>
+
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <Label className="text-base">
+                    Distância: {distance} metros
+                  </Label>
+                  <CircleHelp text="Distância entre o quadro de distribuição e o ponto de uso" />
                 </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="220" id="220v" />
-                  <Label htmlFor="220v" className="cursor-pointer">220V</Label>
-                </div>
-              </RadioGroup>
+                
+                <Slider
+                  value={[distance]}
+                  min={1}
+                  max={100}
+                  step={1}
+                  onValueChange={(values) => setDistance(values[0])}
+                />
+              </div>
             </div>
 
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <Label className="text-base">
-                  Distância: {distance} metros
-                </Label>
-                <CircleHelp text="Distância entre o quadro de distribuição e o ponto de uso" />
-              </div>
-              
-              <Slider
-                value={[distance]}
-                min={1}
-                max={100}
-                step={1}
-                onValueChange={(values) => setDistance(values[0])}
-              />
-            </div>
-
+            {/* Installation Type */}
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <Label className="text-base">Tipo de Instalação</Label>
