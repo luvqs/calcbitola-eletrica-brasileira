@@ -1,9 +1,9 @@
-
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SimpleCalculator } from "@/components/SimpleCalculator";
 import { AdvancedCalculator } from "@/components/AdvancedCalculator";
 import { Logo } from "@/components/Logo";
+import { Calculator, Settings } from "lucide-react";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("simple");
@@ -41,8 +41,14 @@ const Index = () => {
             >
               <div className="px-6 pt-6">
                 <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="simple">Versão Simplificada</TabsTrigger>
-                  <TabsTrigger value="advanced">Versão Avançada</TabsTrigger>
+                  <TabsTrigger value="simple" className="flex items-center gap-2">
+                    <Calculator size={16} />
+                    Calculadora Simples
+                  </TabsTrigger>
+                  <TabsTrigger value="advanced" className="flex items-center gap-2">
+                    <Settings size={16} />
+                    Calculadora Avançada
+                  </TabsTrigger>
                 </TabsList>
               </div>
 
