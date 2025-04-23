@@ -198,11 +198,11 @@ export function SimpleCalculator() {
               >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="127" id="127v" />
-                  <Label htmlFor="127v">127V</Label>
+                  <Label htmlFor="127v" className="cursor-pointer">127V</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="220" id="220v" />
-                  <Label htmlFor="220v">220V</Label>
+                  <Label htmlFor="220v" className="cursor-pointer">220V</Label>
                 </div>
               </RadioGroup>
             </div>
@@ -236,24 +236,25 @@ export function SimpleCalculator() {
                 className="grid grid-cols-1 md:grid-cols-3 gap-4"
               >
                 {installationTypes.map((type) => (
-                  <div
+                  <label
                     key={type.id}
+                    htmlFor={type.id}
                     className={`border rounded-lg p-4 ${
                       installationType === type.id
                         ? "border-primary bg-primary/5"
                         : "border-border"
-                    } transition-colors`}
+                    } transition-colors cursor-pointer`}
                   >
                     <div className="flex items-start space-x-2">
                       <RadioGroupItem value={type.id} id={type.id} className="mt-1" />
                       <div>
-                        <Label htmlFor={type.id} className="font-medium">
+                        <div className="font-medium">
                           {type.label}
-                        </Label>
+                        </div>
                         <p className="text-muted-foreground text-sm">{type.description}</p>
                       </div>
                     </div>
-                  </div>
+                  </label>
                 ))}
               </RadioGroup>
             </div>
