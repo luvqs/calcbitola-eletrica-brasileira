@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -91,8 +90,8 @@ export function SimpleCalculator() {
   const [installationType, setInstallationType] = useState("wall");
   const [result, setResult] = useState<WireResult | null>(null);
   const [suggestions, setSuggestions] = useState(usageTypes[1].suggestions);
+  const [isEditingDistance, setIsEditingDistance] = useState(false);
 
-  // Reset result when any input changes
   useEffect(() => {
     setResult(null);
   }, [usageType, power, voltage, distance, installationType]);
@@ -117,6 +116,13 @@ export function SimpleCalculator() {
     });
     
     setResult(wireResult);
+  };
+
+  const handleDistanceInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    if (!isNaN(value) && value >= 1 && value <= 100) {
+      setDistance(value);
+    }
   };
 
   return (
@@ -218,7 +224,25 @@ export function SimpleCalculator() {
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <Label className="text-base">
-                    Distância: {distance} metros
+                    Distância: {isEditingDistance ? (
+                      <input
+                        type="number"
+                        value={distance}
+                        onChange={handleDistanceInputChange}
+                        onBlur={() => setIsEditingDistance(false)}
+                        className="w-16 inline-block ml-1 px-2 py-0.5 border rounded"
+                        min="1"
+                        max="100"
+                        autoFocus
+                      />
+                    ) : (
+                      <span 
+                        onClick={() => setIsEditingDistance(true)}
+                        className="cursor-pointer hover:text-primary ml-1"
+                      >
+                        {distance}
+                      </span>
+                    )} metros
                   </Label>
                   <CircleHelp text="Distância entre o quadro de distribuição e o ponto de uso" />
                 </div>
