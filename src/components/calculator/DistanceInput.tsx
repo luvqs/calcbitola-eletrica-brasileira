@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
@@ -22,8 +21,10 @@ export function DistanceInput({ distance, onDistanceChange }: DistanceInputProps
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <Label className="text-base">
-          Distância: {isEditingDistance ? (
+        <Label className="text-base flex items-center gap-2">
+          Distância
+          <CircleHelp text="Distância entre o quadro de distribuição e o ponto de uso. Para distancias acima de 100m, use a calculadora avançada." />
+          {isEditingDistance ? (
             <input
               type="number"
               value={distance}
@@ -43,7 +44,6 @@ export function DistanceInput({ distance, onDistanceChange }: DistanceInputProps
             </span>
           )} metros
         </Label>
-        <CircleHelp text="Distância entre o quadro de distribuição e o ponto de uso" />
       </div>
       
       <Slider

@@ -75,8 +75,20 @@ const Index = () => {
                 Cálculos conforme NBR 5410
               </span>
             </div>
-            <div className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} CalcBitola - Calculadora de Bitola de Fios Elétricos
+            <div className="text-sm text-muted-foreground flex items-center gap-1">
+              Desenvolvido por{" "}
+              <a 
+                href="https://lucasvasques.com.br/contato/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-block"
+              >
+                <img 
+                  src="https://lucasvasques.com.br/wp-content/uploads/2023/12/logo-2024-preto.svg" 
+                  alt="Lucas Vasques" 
+                  className="h-4 w-auto"
+                />
+              </a>
             </div>
           </div>
         </div>

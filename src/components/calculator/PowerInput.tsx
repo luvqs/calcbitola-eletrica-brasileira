@@ -1,48 +1,47 @@
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CircleHelp } from "@/components/CircleHelp";
+import { useState, useEffect } from "react";
 
 interface PowerInputProps {
   power: number;
-  suggestions: number[];
   onPowerChange: (value: number) => void;
 }
 
-export function PowerInput({ power, suggestions, onPowerChange }: PowerInputProps) {
+export function PowerInput({ power, onPowerChange }: PowerInputProps) {
+  const [inputValue, setInputValue] = useState(power.toString());
+
+  useEffect(() => {
+    setInputValue(power.toString());
+  }, [power]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setInputValue(value);
+    onPowerChange(Number(value) || 0);
+  };
+
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
+      <div className="flex items-center gap-2">
         <Label htmlFor="power" className="text-base">
           Potência do Equipamento (Watts)
         </Label>
         <CircleHelp text="Potência do equipamento em Watts. Verifique na etiqueta do produto ou manual." />
       </div>
       
-      <div className="space-y-2">
+      <div className="relative">
         <Input
-          type="number"
+          type="text"
           id="power"
-          value={power}
-          onChange={(e) => onPowerChange(Number(e.target.value))}
-          className="w-full"
+          value={inputValue}
+          onChange={handleChange}
+          className="w-full pr-8"
         />
-        
-        <div className="flex flex-wrap gap-2">
-          {suggestions.map((value) => (
-            <Button
-              key={value}
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => onPowerChange(value)}
-              className={power === value ? "bg-primary/10" : ""}
-            >
-              {value} W
-            </Button>
-          ))}
-        </div>
+        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7b738c]">
+          W
+        </span>
       </div>
     </div>
   );

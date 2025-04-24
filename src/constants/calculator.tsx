@@ -1,49 +1,55 @@
-
 import { UsageType, InstallationType } from "@/types/calculator";
 import { LightbulbIcon, Power, Gauge } from "lucide-react";
 
 export const usageTypes: UsageType[] = [
   {
+    id: "general_use",
+    label: "Uso geral",
+    icon: <Power className="w-4 h-4" />,
+    defaultPower: 1000,
+    suggestions: []
+  },
+  {
     id: "illumination",
     label: "Iluminação",
     icon: <LightbulbIcon className="w-4 h-4" />,
     defaultPower: 100,
-    suggestions: [60, 100, 150, 200]
+    suggestions: []
   },
   {
     id: "general",
     label: "Tomadas de uso geral",
     icon: <Power className="w-4 h-4" />,
     defaultPower: 600,
-    suggestions: [600, 1000, 1500, 2000]
+    suggestions: []
   },
   {
     id: "shower",
     label: "Chuveiro/Torneira elétrica",
     icon: <Gauge className="w-4 h-4" />,
     defaultPower: 5500,
-    suggestions: [4400, 5500, 6800, 7500]
+    suggestions: []
   },
   {
     id: "ac",
     label: "Ar-condicionado",
     icon: <Power className="w-4 h-4" />,
     defaultPower: 1500,
-    suggestions: [1000, 1500, 2500, 3500]
+    suggestions: []
   },
   {
     id: "fridge",
     label: "Geladeira/Freezer",
     icon: <Power className="w-4 h-4" />,
     defaultPower: 350,
-    suggestions: [250, 350, 500, 700]
+    suggestions: []
   },
   {
     id: "microwave",
     label: "Micro-ondas/Forno elétrico",
     icon: <Power className="w-4 h-4" />,
     defaultPower: 1500,
-    suggestions: [1000, 1500, 2000, 3000]
+    suggestions: []
   }
 ];
 

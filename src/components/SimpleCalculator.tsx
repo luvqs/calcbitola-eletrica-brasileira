@@ -11,30 +11,31 @@ import { PowerInput } from "./calculator/PowerInput";
 import { VoltageInput } from "./calculator/VoltageInput";
 import { DistanceInput } from "./calculator/DistanceInput";
 import { InstallationTypeInput } from "./calculator/InstallationTypeInput";
+import { useToast } from "@/hooks/use-toast";
 
 export function SimpleCalculator() {
-  const [usageType, setUsageType] = useState("general");
-  const [power, setPower] = useState(600);
+  const [usageType, setUsageType] = useState("general_use");
+  const [power, setPower] = useState(1000);
   const [voltage, setVoltage] = useState("220");
   const [distance, setDistance] = useState(15);
   const [installationType, setInstallationType] = useState("wall");
   const [result, setResult] = useState<WireResult | null>(null);
-  const [suggestions, setSuggestions] = useState(usageTypes[1].suggestions);
+  const { toast } = useToast();
 
   useEffect(() => {
     setResult(null);
   }, [usageType, power, voltage, distance, installationType]);
 
-  const handleUsageTypeChange = (value: string) => {
-    setUsageType(value);
-    const selectedType = usageTypes.find(type => type.id === value);
-    if (selectedType) {
-      setPower(selectedType.defaultPower);
-      setSuggestions(selectedType.suggestions);
-    }
-  };
-
   const handleCalculate = () => {
+    if (!power) {
+      toast({
+        variant: "destructive",
+        title: "Campo obrigatório",
+        description: "Por favor, preencha a Potência do Equipamento",
+      });
+      return;
+    }
+
     const wireResult = calculateWireGauge({
       type: usageType,
       power: power,
