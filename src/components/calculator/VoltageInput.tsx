@@ -11,7 +11,7 @@ interface VoltageInputProps {
 export function VoltageInput({ voltage, onVoltageChange }: VoltageInputProps) {
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
+      <div className="flex items-center gap-2">
         <Label className="text-base">Tensão da Rede</Label>
         <CircleHelp text="Tensão da rede elétrica disponível no local da instalação" />
       </div>

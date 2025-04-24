@@ -15,7 +15,7 @@ export function InstallationTypeInput({
 }: InstallationTypeInputProps) {
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
+      <div className="flex items-center gap-2">
         <Label className="text-base">Tipo de Instalação</Label>
         <CircleHelp text="Como os fios serão instalados" />
       </div>

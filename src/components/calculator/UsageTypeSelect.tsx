@@ -12,7 +12,7 @@ interface UsageTypeSelectProps {
 export function UsageTypeSelect({ usageType, onUsageTypeChange }: UsageTypeSelectProps) {
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
+      <div className="flex items-center gap-2">
         <Label htmlFor="usageType" className="text-base">
           Tipo de Uso
         </Label>
