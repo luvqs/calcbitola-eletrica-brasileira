@@ -48,6 +48,15 @@ export function SimpleCalculator() {
     setResult(wireResult);
   };
 
+  const handleUsageTypeChange = (value: string) => {
+    setUsageType(value);
+    // Find the default power for the selected usage type
+    const selectedType = usageTypes.find(type => type.id === value);
+    if (selectedType && selectedType.defaultPower) {
+      setPower(selectedType.defaultPower);
+    }
+  };
+
   return (
     <div className="w-full space-y-6">
       <div className="flex items-center gap-2 text-primary">
@@ -66,7 +75,6 @@ export function SimpleCalculator() {
               />
               <PowerInput 
                 power={power} 
-                suggestions={suggestions} 
                 onPowerChange={setPower} 
               />
             </div>
