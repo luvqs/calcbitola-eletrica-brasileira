@@ -40,14 +40,20 @@ const Index = () => {
               className="w-full"
             >
               <div className="px-6 pt-6">
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="simple" className="flex items-center gap-2">
-                    <Calculator size={16} />
-                    Calculadora Simples
+                <TabsList className="grid w-full grid-cols-2 p-1 bg-purple-50 rounded-lg">
+                  <TabsTrigger 
+                    value="simple" 
+                    className="flex items-center gap-2 data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-md data-[state=active]:scale-100 data-[state=inactive]:hover:bg-white/50 transition-all duration-200 rounded-lg py-3"
+                  >
+                    <Calculator size={20} className="text-purple-500" />
+                    <span className="font-medium">Calculadora Simples</span>
                   </TabsTrigger>
-                  <TabsTrigger value="advanced" className="flex items-center gap-2">
-                    <Settings size={16} />
-                    Calculadora Avançada
+                  <TabsTrigger 
+                    value="advanced" 
+                    className="flex items-center gap-2 data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-md data-[state=active]:scale-100 data-[state=inactive]:hover:bg-white/50 transition-all duration-200 rounded-lg py-3"
+                  >
+                    <Settings size={20} className="text-purple-500" />
+                    <span className="font-medium">Calculadora Avançada</span>
                   </TabsTrigger>
                 </TabsList>
               </div>
