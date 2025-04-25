@@ -94,8 +94,20 @@ export function calculateWireGauge(params: SimpleCalcParams): WireResult {
     sectionByCurrent = 35;
   } else if (current <= 134) {
     sectionByCurrent = 50;
+  } else if (current <= 171) {
+    sectionByCurrent = 70;
+  } else if (current <= 207) {
+    sectionByCurrent = 95;
+  } else if (current <= 239) {
+    sectionByCurrent = 120;
+  } else if (current <= 272) {
+    sectionByCurrent = 150;
+  } else if (current <= 310) {
+    sectionByCurrent = 185;
+  } else if (current <= 364) {
+    sectionByCurrent = 240;
   } else {
-    sectionByCurrent = 70; // For larger currents, would need more detailed calculation
+    sectionByCurrent = 300; // For larger currents
   }
   
   // Calculate voltage drop (simplified)
@@ -119,10 +131,11 @@ export function calculateWireGauge(params: SimpleCalcParams): WireResult {
     }
   }
   
-  // Determine appropriate breaker size
+  // Determine appropriate breaker size based on the calculated current
   let breakerSize = standardBreakerSizes[0];
   for (const size of standardBreakerSizes) {
-    if (size >= current && size <= getMaxCurrentForWire(commercialGauge)) {
+    // Fix: Ensure the breaker is sized appropriately for the actual current
+    if (size >= current) {
       breakerSize = size;
       break;
     }
