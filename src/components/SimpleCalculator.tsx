@@ -130,7 +130,7 @@ export function SimpleCalculator() {
         </CardContent>
       </Card>
 
-      {result && <ResultDisplay result={result} />}
+      {!powerExceeded && result && <ResultDisplay result={result} />}
     </div>
   );
 }
