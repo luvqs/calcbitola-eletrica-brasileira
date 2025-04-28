@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SimpleCalculator } from "@/components/SimpleCalculator";
@@ -9,44 +10,50 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState("simple");
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gray-50">
+    <div className="min-h-screen flex flex-col items-center bg-gradient-to-b from-slate-50 to-slate-100">
       {/* Header */}
-      <header className="w-full bg-white shadow-sm py-4">
+      <header className="w-full bg-white shadow-md py-4">
         <div className="container mx-auto px-4 flex items-center justify-between">
           <Logo size="lg" />
-          <div className="text-sm text-muted-foreground">
+          <div className="text-sm text-slate-600 font-medium">
             Calculadora de Bitola de Fios Elétricos
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8 flex-1">
+      <main className="container mx-auto px-4 py-12 flex-1">
         <div className="max-w-5xl mx-auto">
-          <section className="mb-8 text-center">
-            <h1 className="text-3xl md:text-4xl font-bold text-primary mb-2">
+          <section className="mb-10 text-center">
+            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-3">
               Cálculo de Bitola de Fios Elétricos
             </h1>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-lg text-slate-600 max-w-3xl mx-auto">
               Dimensionamento de condutores elétricos conforme a NBR 5410 para instalações
               seguras e eficientes.
             </p>
           </section>
 
-          <div className="bg-white rounded-xl shadow-md overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100">
             <Tabs
               value={activeTab}
               onValueChange={setActiveTab}
               className="w-full"
             >
               <div className="px-6 pt-6">
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="simple" className="flex items-center gap-2">
-                    <Calculator size={16} />
+                <TabsList className="grid w-full grid-cols-2 bg-slate-100 p-1 rounded-xl">
+                  <TabsTrigger 
+                    value="simple" 
+                    className="flex items-center gap-2 rounded-lg data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-md transition-all duration-200"
+                  >
+                    <Calculator size={18} />
                     Calculadora Simples
                   </TabsTrigger>
-                  <TabsTrigger value="advanced" className="flex items-center gap-2">
-                    <Settings size={16} />
+                  <TabsTrigger 
+                    value="advanced"
+                    className="flex items-center gap-2 rounded-lg data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-md transition-all duration-200"
+                  >
+                    <Settings size={18} />
                     Calculadora Avançada
                   </TabsTrigger>
                 </TabsList>
@@ -66,22 +73,22 @@ const Index = () => {
       </main>
 
       {/* Footer */}
-      <footer className="w-full bg-white shadow-sm py-6 mt-8">
+      <footer className="w-full bg-white shadow-inner py-6 mt-8 border-t border-slate-200">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <Logo size="sm" />
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm text-slate-600">
                 Cálculos conforme NBR 5410
               </span>
             </div>
-            <div className="text-sm text-muted-foreground flex items-center gap-1">
+            <div className="text-sm text-slate-600 flex items-center gap-1">
               Desenvolvido por{" "}
               <a 
                 href="https://lucasvasques.com.br/contato/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-block"
+                className="inline-block transition-transform hover:scale-105"
               >
                 <img 
                   src="https://lucasvasques.com.br/wp-content/uploads/2023/12/logo-2024-preto.svg" 

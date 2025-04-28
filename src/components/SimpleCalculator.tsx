@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calculator, ArrowRight } from "lucide-react";
+import { Calculator, ArrowRight, AlertCircle } from "lucide-react";
 import { calculateWireGauge, type WireResult } from "@/lib/calculations";
 import { ResultDisplay } from "@/components/ResultDisplay";
 import { usageTypes } from "@/constants/calculator";
@@ -12,6 +12,9 @@ import { VoltageInput } from "./calculator/VoltageInput";
 import { DistanceInput } from "./calculator/DistanceInput";
 import { InstallationTypeInput } from "./calculator/InstallationTypeInput";
 import { useToast } from "@/hooks/use-toast";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+
+const POWER_LIMIT = 50000; // 50,000 watts maximum
 
 export function SimpleCalculator() {
   const [usageType, setUsageType] = useState("general_use");
@@ -20,10 +23,12 @@ export function SimpleCalculator() {
   const [distance, setDistance] = useState(15);
   const [installationType, setInstallationType] = useState("wall");
   const [result, setResult] = useState<WireResult | null>(null);
+  const [powerExceeded, setPowerExceeded] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
     setResult(null);
+    setPowerExceeded(false);
   }, [usageType, power, voltage, distance, installationType]);
 
   const handleCalculate = () => {
@@ -33,6 +38,12 @@ export function SimpleCalculator() {
         title: "Campo obrigatório",
         description: "Por favor, preencha a Potência do Equipamento",
       });
+      return;
+    }
+
+    if (power > POWER_LIMIT) {
+      setPowerExceeded(true);
+      setResult(null);
       return;
     }
 
@@ -64,7 +75,16 @@ export function SimpleCalculator() {
         <h2 className="text-lg font-medium">Cálculo Simplificado</h2>
       </div>
       
-      <Card>
+      {powerExceeded && (
+        <Alert variant="destructive" className="bg-red-50 border border-red-200">
+          <AlertCircle className="h-5 w-5 text-red-500" />
+          <AlertDescription className="text-red-800">
+            Essa calculadora só funciona até 50.000W. Para potências maiores, sugerimos utilizar a calculadora avançada ou consultar um profissional.
+          </AlertDescription>
+        </Alert>
+      )}
+      
+      <Card className="overflow-hidden border-primary/10 shadow-lg">
         <CardContent className="pt-6">
           <form className="space-y-6">
             {/* First row - Usage Type and Power */}
@@ -99,7 +119,7 @@ export function SimpleCalculator() {
 
             <Button 
               type="button" 
-              className="w-full" 
+              className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 transition-all duration-300"
               size="lg"
               onClick={handleCalculate}
             >

@@ -25,7 +25,7 @@ export function DistanceInput({ distance, onDistanceChange }: DistanceInputProps
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        <Label htmlFor="distance" className="text-base">Distância</Label>
+        <Label htmlFor="distance" className="text-base font-medium text-slate-700">Distância</Label>
         <CircleHelp text="Distância total do circuito em metros (ida e volta)" />
       </div>
       
@@ -35,9 +35,9 @@ export function DistanceInput({ distance, onDistanceChange }: DistanceInputProps
           id="distance"
           value={inputValue}
           onChange={handleChange}
-          className="w-full pr-8"
+          className="w-full pr-12 rounded-xl border-slate-300 bg-white/80 shadow-sm hover:border-primary/50 focus:border-primary focus:ring focus:ring-primary/30 transition-all"
         />
-        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7b738c]">
+        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 font-medium">
           m
         </span>
       </div>
