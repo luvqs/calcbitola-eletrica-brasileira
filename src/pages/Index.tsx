@@ -12,10 +12,10 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col items-center bg-gradient-to-b from-slate-50 to-slate-100">
       {/* Header */}
-      <header className="w-full bg-white shadow-md py-4">
+      <header className="w-full bg-white shadow-md py-4 border-b border-slate-100">
         <div className="container mx-auto px-4 flex items-center justify-between">
-          <Logo size="lg" />
-          <div className="text-sm text-slate-600 font-medium">
+          <Logo size="lg" className="hover-scale" />
+          <div className="text-lg font-medium bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Calculadora de Bitola de Fios Elétricos
           </div>
         </div>
@@ -24,8 +24,8 @@ const Index = () => {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-12 flex-1">
         <div className="max-w-5xl mx-auto">
-          <section className="mb-10 text-center">
-            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-3">
+          <section className="mb-10 text-center animate-fade-in">
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-5">
               Cálculo de Bitola de Fios Elétricos
             </h1>
             <p className="text-lg text-slate-600 max-w-3xl mx-auto">
@@ -34,7 +34,7 @@ const Index = () => {
             </p>
           </section>
 
-          <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100">
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100 transition-all duration-300 hover:shadow-2xl">
             <Tabs
               value={activeTab}
               onValueChange={setActiveTab}
@@ -78,7 +78,7 @@ const Index = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <Logo size="sm" />
-              <span className="text-sm text-slate-600">
+              <span className="text-sm font-medium text-slate-600">
                 Cálculos conforme NBR 5410
               </span>
             </div>
@@ -88,7 +88,7 @@ const Index = () => {
                 href="https://lucasvasques.com.br/contato/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-block transition-transform hover:scale-105"
+                className="inline-block transition-transform hover:scale-105 ml-1"
               >
                 <img 
                   src="https://lucasvasques.com.br/wp-content/uploads/2023/12/logo-2024-preto.svg" 

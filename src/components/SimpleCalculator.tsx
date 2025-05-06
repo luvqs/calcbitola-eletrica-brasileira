@@ -69,22 +69,18 @@ export function SimpleCalculator() {
   };
 
   return (
-    <div className="w-full space-y-6">
-      <div className="flex items-center gap-2 text-primary">
-        <Calculator className="w-5 h-5" />
-        <h2 className="text-lg font-medium">Cálculo Simplificado</h2>
+    <div className="w-full space-y-8">
+      <div className="flex items-center gap-3 text-primary">
+        <div className="p-2 bg-primary/10 rounded-full">
+          <Calculator className="w-5 h-5" />
+        </div>
+        <h2 className="text-xl font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          Cálculo Simplificado
+        </h2>
       </div>
       
-      {powerExceeded && (
-        <Alert variant="destructive" className="bg-red-50 border border-red-200">
-          <AlertCircle className="h-5 w-5 text-red-500" />
-          <AlertDescription className="text-red-800">
-            Essa calculadora só funciona até 50.000W. Para potências maiores, sugerimos utilizar a calculadora avançada ou consultar um profissional.
-          </AlertDescription>
-        </Alert>
-      )}
-      
-      <Card className="overflow-hidden border-primary/10 shadow-lg">
+      <Card className="overflow-hidden border-primary/10 shadow-lg transition-all duration-300 hover:shadow-xl rounded-xl">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary"></div>
         <CardContent className="pt-6">
           <form className="space-y-6">
             {/* First row - Usage Type and Power */}
@@ -119,7 +115,7 @@ export function SimpleCalculator() {
 
             <Button 
               type="button" 
-              className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 transition-all duration-300"
+              className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 shadow-lg hover:shadow-primary/20 hover:shadow-xl"
               size="lg"
               onClick={handleCalculate}
             >
@@ -130,6 +126,15 @@ export function SimpleCalculator() {
         </CardContent>
       </Card>
 
+      {powerExceeded && (
+        <Alert variant="destructive" className="mt-4 bg-red-50 border border-red-200 rounded-xl shadow-sm">
+          <AlertCircle className="h-5 w-5 text-red-500" />
+          <AlertDescription className="text-red-800">
+            A calculadora simples só funciona até 50.000W. Para potências maiores, sugerimos utilizar a calculadora avançada ou consultar um profissional.
+          </AlertDescription>
+        </Alert>
+      )}
+      
       {!powerExceeded && result && <ResultDisplay result={result} />}
     </div>
   );
