@@ -15,6 +15,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const POWER_LIMIT = 50000; // 50,000 watts maximum
+const DISTANCE_LIMIT = 1000; // 1,000 meters maximum
 
 export function SimpleCalculator() {
   const [usageType, setUsageType] = useState("general_use");
@@ -24,11 +25,13 @@ export function SimpleCalculator() {
   const [installationType, setInstallationType] = useState("wall");
   const [result, setResult] = useState<WireResult | null>(null);
   const [powerExceeded, setPowerExceeded] = useState(false);
+  const [distanceExceeded, setDistanceExceeded] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
     setResult(null);
     setPowerExceeded(false);
+    setDistanceExceeded(false);
   }, [usageType, power, voltage, distance, installationType]);
 
   const handleCalculate = () => {
@@ -43,6 +46,14 @@ export function SimpleCalculator() {
 
     if (power > POWER_LIMIT) {
       setPowerExceeded(true);
+      setDistanceExceeded(false);
+      setResult(null);
+      return;
+    }
+
+    if (distance > DISTANCE_LIMIT) {
+      setDistanceExceeded(true);
+      setPowerExceeded(false);
       setResult(null);
       return;
     }
@@ -135,7 +146,16 @@ export function SimpleCalculator() {
         </Alert>
       )}
       
-      {!powerExceeded && result && <ResultDisplay result={result} />}
+      {distanceExceeded && (
+        <Alert variant="destructive" className="mt-4 bg-red-50 border border-red-200 rounded-xl shadow-sm">
+          <AlertCircle className="h-5 w-5 text-red-500" />
+          <AlertDescription className="text-red-800">
+            A calculadora simples só funciona para distâncias até 1.000m. Para distâncias maiores, sugerimos utilizar a calculadora avançada ou consultar um profissional.
+          </AlertDescription>
+        </Alert>
+      )}
+      
+      {!powerExceeded && !distanceExceeded && result && <ResultDisplay result={result} />}
     </div>
   );
 }

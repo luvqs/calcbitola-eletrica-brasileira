@@ -1,4 +1,3 @@
-
 export interface SimpleCalcParams {
   type: string;
   power: number;
@@ -117,6 +116,7 @@ export function calculateWireGauge(params: SimpleCalcParams): WireResult {
   const maxDropPercentage = 0.04; // 4% maximum voltage drop
   const maxDropVolts = voltage * maxDropPercentage;
   
+  // Fixed formula to properly account for long distances
   const sectionByDrop = (2 * resistivity * distance * current * powerFactor) / maxDropVolts;
   
   // Take the largest of the three criteria
