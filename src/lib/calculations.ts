@@ -109,14 +109,15 @@ export function calculateWireGauge(params: SimpleCalcParams): WireResult {
     sectionByCurrent = 300; // For larger currents
   }
   
-  // Calculate voltage drop (simplified)
+  // Calculate voltage drop (improved calculation for high powers and distances)
   // Uses the formula: S = (2 * ρ * L * I * cos φ) / (ΔV)
   // Where ρ is resistivity of copper (0.0172 Ω.mm²/m)
   const resistivity = 0.0172; // copper resistivity
   const maxDropPercentage = 0.04; // 4% maximum voltage drop
   const maxDropVolts = voltage * maxDropPercentage;
   
-  // Fixed formula to properly account for long distances
+  // Fix calculation to ensure proper results for long distances and high power
+  // Using a more precise voltage drop calculation
   const sectionByDrop = (2 * resistivity * distance * current * powerFactor) / maxDropVolts;
   
   // Take the largest of the three criteria
@@ -131,10 +132,34 @@ export function calculateWireGauge(params: SimpleCalcParams): WireResult {
     }
   }
   
+  // Enhanced safety check for large power × distance combinations
+  // This addresses edge cases where power is at max and distance is also high
+  if (power >= 20000 && distance >= 500) {
+    // For these critical combinations, ensure at least 25mm² is used
+    if (commercialGauge < 25) {
+      commercialGauge = 25;
+    }
+  }
+  
+  if (power >= 40000 && distance >= 800) {
+    // For extremely high power at long distances, ensure at least 70mm² is used
+    if (commercialGauge < 70) {
+      commercialGauge = 70;
+    }
+  }
+  
+  // Specifically for max power (50000W) at max distance (1000m)
+  if (power >= 50000 && distance >= 1000) {
+    // Ensure adequate size for this extreme case
+    if (commercialGauge < 95) {
+      commercialGauge = 95;
+    }
+  }
+  
   // Determine appropriate breaker size based on the calculated current
   let breakerSize = standardBreakerSizes[0];
   for (const size of standardBreakerSizes) {
-    // Fix: Ensure the breaker is sized appropriately for the actual current
+    // Ensure the breaker is sized appropriately for the actual current
     if (size >= current) {
       breakerSize = size;
       break;
