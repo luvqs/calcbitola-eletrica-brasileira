@@ -12,7 +12,7 @@ interface DistanceInputProps {
 export function DistanceInput({ distance, onDistanceChange }: DistanceInputProps) {
   const [inputValue, setInputValue] = useState(distance.toString());
   const [isExceeded, setIsExceeded] = useState(false);
-  const MAX_DISTANCE = 1000; // 1,000 meters maximum
+  const MAX_DISTANCE = 200; // 200 meters maximum (changed from 1,000)
 
   useEffect(() => {
     setInputValue(distance.toString());
@@ -31,7 +31,7 @@ export function DistanceInput({ distance, onDistanceChange }: DistanceInputProps
     <div className="space-y-4">
       <div className="flex items-center gap-2">
         <Label htmlFor="distance" className="text-base font-medium text-slate-700">Distância</Label>
-        <CircleHelp text="Distância total do circuito em metros (ida e volta). Máximo de 1.000 metros." />
+        <CircleHelp text="Distância total do circuito em metros (ida e volta). Máximo de 200 metros." />
       </div>
       
       <div className="relative">
@@ -47,7 +47,7 @@ export function DistanceInput({ distance, onDistanceChange }: DistanceInputProps
         </span>
       </div>
       {isExceeded && (
-        <p className="text-xs text-red-500 mt-1">A distância máxima suportada é de 1.000 metros.</p>
+        <p className="text-xs text-red-500 mt-1">A distância máxima suportada é de 200 metros.</p>
       )}
     </div>
   );

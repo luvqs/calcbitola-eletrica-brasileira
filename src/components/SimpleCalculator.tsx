@@ -15,7 +15,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const POWER_LIMIT = 50000; // 50,000 watts maximum
-const DISTANCE_LIMIT = 1000; // 1,000 meters maximum
+const DISTANCE_LIMIT = 200; // 200 meters maximum (changed from 1,000)
 
 export function SimpleCalculator() {
   const [usageType, setUsageType] = useState("general_use");
